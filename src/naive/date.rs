@@ -873,6 +873,12 @@ impl NaiveDate {
         NaiveTime::from_hms_nano_opt(hour, min, sec, nano).map(|time| self.and_time(time))
     }
 
+    /// Makes a DateTime for the first second of the day in the provided timezone.
+    #[inline]
+    pub fn and_first_second<Tz: TimeZone>(&self, tz: &Tz) -> DateTime<Tz> {
+        self.and_hms(0, 0, 0).and_local_timezone(tz).unwrap()
+    }
+
     /// Returns the packed month-day-flags.
     #[inline]
     fn mdf(&self) -> Mdf {
